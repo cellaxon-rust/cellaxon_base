@@ -1,8 +1,25 @@
 [package]
 name = "cellaxon_base"
 version = "0.1.0"
+authors = ["Sanghyo Lee <ryan@cellaxon.com>"]
+description = "CELLAXON base"
+documentation = "https://docs.rs/e_drone"
+homepage = "https://cellaxon.com"
+repository = "https://github.com/cellaxon-rust/cellaxon_base"
 edition = "2021"
+license = "MIT OR Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+name = "cellaxon_base"
+bench = false
+
+
 [dependencies]
+csv = "1.1"
+chrono="0.4"
+num_enum = "0.5"
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.5"
+
