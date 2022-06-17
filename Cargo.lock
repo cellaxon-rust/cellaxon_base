@@ -22,7 +22,7 @@ dependencies = [
 
 [[package]]
 name = "cellaxon_base"
-version = "0.1.0"
+version = "22.6.1"
 dependencies = [
  "chrono",
  "csv",
