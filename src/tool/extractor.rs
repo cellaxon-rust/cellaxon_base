@@ -23,22 +23,28 @@ pub struct Extractor
 
 impl Extractor
 {
-    pub fn new() -> Extractor {
-        Extractor {
+    pub fn new() -> Extractor
+    {
+        Extractor
+        {
             vec_data: Vec::new(),
             index: 0,
         }
     }
 
-    pub fn from_vec(source: &Vec<u8>) -> Extractor {
-        Extractor {
+    pub fn from_vec(source: &Vec<u8>) -> Extractor
+    {
+        Extractor
+        {
             vec_data: source.clone(),
             index: 0,
         }
     }
 
-    pub fn from_slice(source:  &[u8]) -> Extractor {
-        Extractor {
+    pub fn from_slice(source:  &[u8]) -> Extractor
+    {
+        Extractor
+        {
             vec_data: source.to_vec(),
             index: 0,
         }
@@ -46,7 +52,8 @@ impl Extractor
 
     pub fn get_u8(&mut self) -> u8
     {
-        if self.index + 1 <= self.vec_data.len() {
+        if self.index + 1 <= self.vec_data.len()
+        {
             let value: u8 = self.vec_data[self.index];
             self.index = self.index + 1;
             value
@@ -56,7 +63,8 @@ impl Extractor
 
     pub fn get_u16(&mut self) -> u16
     {
-        if self.index + 2 <= self.vec_data.len() {
+        if self.index + 2 <= self.vec_data.len()
+        {
             let value: u16 = LittleEndian::read_u16(&self.vec_data[self.index..(self.index+2)]);
             self.index = self.index + 2;
             value
@@ -66,7 +74,8 @@ impl Extractor
 
     pub fn get_u32(&mut self) -> u32
     {
-        if self.index + 4 <= self.vec_data.len() {
+        if self.index + 4 <= self.vec_data.len()
+        {
             let value: u32 = LittleEndian::read_u32(&self.vec_data[self.index..(self.index+4)]);
             self.index = self.index + 4;
             value
@@ -76,7 +85,8 @@ impl Extractor
 
     pub fn get_u64(&mut self) -> u64
     {
-        if self.index + 8 <= self.vec_data.len() {
+        if self.index + 8 <= self.vec_data.len()
+        {
             let value: u64 = LittleEndian::read_u64(&self.vec_data[self.index..(self.index+8)]);
             self.index = self.index + 8;
             value
@@ -86,7 +96,8 @@ impl Extractor
 
     pub fn get_i8(&mut self) -> i8
     {
-        if self.index + 1 <= self.vec_data.len() {
+        if self.index + 1 <= self.vec_data.len()
+        {
             let value: i8 = self.vec_data[self.index] as i8;
             self.index = self.index + 1;
             value
@@ -96,7 +107,8 @@ impl Extractor
 
     pub fn get_i16(&mut self) -> i16
     {
-        if self.index + 2 <= self.vec_data.len() {
+        if self.index + 2 <= self.vec_data.len()
+        {
             let value: i16 = LittleEndian::read_i16(&self.vec_data[self.index..(self.index+2)]);
             self.index = self.index + 2;
             value
@@ -106,7 +118,8 @@ impl Extractor
 
     pub fn get_i32(&mut self) -> i32
     {
-        if self.index + 4 <= self.vec_data.len() {
+        if self.index + 4 <= self.vec_data.len()
+        {
             let value: i32 = LittleEndian::read_i32(&self.vec_data[self.index..(self.index+4)]);
             self.index = self.index + 4;
             value
@@ -116,7 +129,8 @@ impl Extractor
 
     pub fn get_i64(&mut self) -> i64
     {
-        if self.index + 8 <= self.vec_data.len() {
+        if self.index + 8 <= self.vec_data.len()
+        {
             let value: i64 = LittleEndian::read_i64(&self.vec_data[self.index..(self.index+8)]);
             self.index = self.index + 8;
             value
@@ -126,7 +140,8 @@ impl Extractor
 
     pub fn get_f32(&mut self) -> f32
     {
-        if self.index + 4 <= self.vec_data.len() {
+        if self.index + 4 <= self.vec_data.len()
+        {
             let value: f32 = LittleEndian::read_f32(&self.vec_data[self.index..(self.index+4)]);
             self.index = self.index + 4;
             value
@@ -136,7 +151,8 @@ impl Extractor
 
     pub fn get_f64(&mut self) -> f64
     {
-        if self.index + 8 <= self.vec_data.len() {
+        if self.index + 8 <= self.vec_data.len()
+        {
             let value: f64 = LittleEndian::read_f64(&self.vec_data[self.index..(self.index+8)]);
             self.index = self.index + 8;
             value
@@ -146,7 +162,8 @@ impl Extractor
 
     pub fn get_array(&mut self, length : usize) -> Vec<u8>
     {
-        if self.index + length <= self.vec_data.len() {
+        if self.index + length <= self.vec_data.len()
+        {
             let value = self.vec_data[self.index..(self.index+length)].to_vec();
             self.index = self.index + length;
             return value;
@@ -160,11 +177,13 @@ impl Extractor
         self.vec_data.clone()
     }
 
-    pub fn get_length(&self) -> usize {
+    pub fn get_length(&self) -> usize
+    {
         self.vec_data.len()
     }
 
-    pub fn check_remain(&self) -> usize {
+    pub fn check_remain(&self) -> usize
+    {
         self.get_length() - self.index
     }
 }

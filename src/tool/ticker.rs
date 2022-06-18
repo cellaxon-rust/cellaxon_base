@@ -1,14 +1,16 @@
 use std::time::Instant;
 
 
-pub struct Ticker {
+pub struct Ticker
+{
     time_start: Instant,
     time_next: u128,
     time_interval: u32,
 }
 
 
-impl Ticker {
+impl Ticker
+{
     pub fn empty() -> Ticker
     {
         Ticker

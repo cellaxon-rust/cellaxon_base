@@ -1,7 +1,8 @@
 use std::time::Instant;
 
 
-pub struct FramePerSecond {
+pub struct FramePerSecond
+{
     time_start: Instant,
     time_check_next: u128,
     count_frame: i32,
@@ -10,9 +11,12 @@ pub struct FramePerSecond {
 
 
 // 초당 tick이 호출된 횟수를 카운트
-impl FramePerSecond {
-    pub fn new() -> FramePerSecond {
-        FramePerSecond {
+impl FramePerSecond
+{
+    pub fn new() -> FramePerSecond
+    {
+        FramePerSecond
+        {
             time_start: Instant::now(),
             time_check_next: Instant::now().elapsed().as_millis(),
             count_frame: 0,
@@ -20,17 +24,23 @@ impl FramePerSecond {
         }
     }
 
-    pub fn tick(&mut self) {
+
+    pub fn tick(&mut self)
+    {
         self.count_frame = self.count_frame + 1;
         let time_now = self.time_start.elapsed().as_millis();
-        if time_now > self.time_check_next {
+
+        if time_now > self.time_check_next
+        {
             self.time_check_next = time_now + 1000;
             self.fps = self.count_frame;
             self.count_frame = 0;
         }
     }
 
-    pub fn get_fps(&self) -> i32 {
+    
+    pub fn get_fps(&self) -> i32
+    {
         self.fps
     }
 }
