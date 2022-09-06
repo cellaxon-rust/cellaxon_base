@@ -25,7 +25,7 @@ impl FramePerSecond
     }
 
 
-    pub fn tick(&mut self)
+    pub fn tick(&mut self) -> bool
     {
         self.count_frame = self.count_frame + 1;
         let time_now = self.time_start.elapsed().as_millis();
@@ -35,7 +35,11 @@ impl FramePerSecond
             self.time_check_next = time_now + 1000;
             self.fps = self.count_frame;
             self.count_frame = 0;
+
+            return true;
         }
+
+        false
     }
 
     
