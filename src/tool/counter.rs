@@ -82,11 +82,12 @@ impl Counter
     }
 
 
-    pub fn tick(&mut self) -> bool
+    pub fn tick(&mut self) -> (bool, bool)
     {
         let time_now = self.time_start.elapsed().as_millis();
 
-        let mut flag_updated = false;
+        let mut flag_updated_sec = false;
+        let mut flag_updated_min = false;
 
         self.count_total = self.count_total + 1;
 
@@ -97,7 +98,7 @@ impl Counter
             self.fps = self.count_frame_sec;
             self.count_frame_sec = 0;
 
-            flag_updated = true;
+            flag_updated_sec = true;
         }
 
         self.count_frame_min = self.count_frame_min + 1;
@@ -106,9 +107,11 @@ impl Counter
             self.time_check_next_min = time_now + 1000 * 60;
             self.fpm = self.count_frame_min;
             self.count_frame_min = 0;
+
+            flag_updated_min = true;
         }
 
-        flag_updated
+        (flag_updated_sec, flag_updated_min)
     }
 
     

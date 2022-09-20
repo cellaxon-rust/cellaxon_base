@@ -1,6 +1,6 @@
 [package]
 name = "cellaxon_base"
-version = "22.9.2"
+version = "22.9.3"
 authors = ["Sanghyo Lee <ryan@cellaxon.com>"]
 description = "CELLAXON base"
 documentation = "https://docs.rs/e_drone"
