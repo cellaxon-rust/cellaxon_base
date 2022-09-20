@@ -49,3 +49,78 @@ impl FramePerSecond
     }
 }
 
+
+pub struct Counter
+{
+    time_start: Instant,
+    time_check_next_sec: u128,
+    time_check_next_min: u128,
+    count_total: u128,
+    count_frame_sec: i32,
+    count_frame_min: i32,
+    fps: i32,
+    fpm: i32,
+}
+
+
+// 초당 tick이 호출된 횟수를 카운트
+impl Counter
+{
+    pub fn new() -> Counter
+    {
+        Counter
+        {
+            time_start: Instant::now(),
+            time_check_next_sec: Instant::now().elapsed().as_millis(),
+            time_check_next_min: Instant::now().elapsed().as_millis(),
+            count_total: 0,
+            count_frame_sec: 0,
+            count_frame_min: 0,
+            fps: 0,
+            fpm: 0,
+        }
+    }
+
+
+    pub fn tick(&mut self) -> bool
+    {
+        let time_now = self.time_start.elapsed().as_millis();
+
+        let mut flag_updated = false;
+
+        self.count_total = self.count_total + 1;
+
+        self.count_frame_sec = self.count_frame_sec + 1;
+        if time_now > self.time_check_next_sec
+        {
+            self.time_check_next_sec = time_now + 1000;
+            self.fps = self.count_frame_sec;
+            self.count_frame_sec = 0;
+
+            flag_updated = true;
+        }
+
+        self.count_frame_min = self.count_frame_min + 1;
+        if time_now > self.time_check_next_min
+        {
+            self.time_check_next_min = time_now + 1000 * 60;
+            self.fpm = self.count_frame_min;
+            self.count_frame_min = 0;
+        }
+
+        flag_updated
+    }
+
+    
+    pub fn get_fps(&self) -> i32
+    {
+        self.fps
+    }
+
+    
+    pub fn get_fpm(&self) -> i32
+    {
+        self.fpm
+    }
+}
+
