@@ -50,7 +50,7 @@ impl FramePerSecond
 }
 
 
-pub struct Counter
+pub struct CounterLight
 {
     time_start: Instant,
     time_check_next_sec: u128,
@@ -64,11 +64,11 @@ pub struct Counter
 
 
 // 초당 tick이 호출된 횟수를 카운트
-impl Counter
+impl CounterLight
 {
-    pub fn new() -> Counter
+    pub fn new() -> CounterLight
     {
-        Counter
+        CounterLight
         {
             time_start: Instant::now(),
             time_check_next_sec: Instant::now().elapsed().as_millis(),
@@ -124,6 +124,86 @@ impl Counter
     pub fn get_fpm(&self) -> i32
     {
         self.fpm
+    }
+}
+
+
+
+pub struct Counter
+{
+    time_start: Instant,
+    time_tick_previous: u128,
+    count_total: u128,
+    count_per_second: f64,
+    count_per_minute: f64,
+    count_per_second_average: f64,
+    count_per_minute_average: f64,
+    alpha: f64,
+}
+
+
+// 초당 tick이 호출된 횟수를 카운트
+impl Counter
+{
+    pub fn new() -> Counter
+    {
+        Counter
+        {
+            time_start: Instant::now(),
+            time_tick_previous: Instant::now().elapsed().as_millis(),
+            count_total: 0,
+            count_per_second: 0.0_f64,
+            count_per_minute: 0.0_f64,
+            count_per_second_average: 0.0_f64,
+            count_per_minute_average: 0.0_f64,
+            alpha: 0.1_f64,
+        }
+    }
+
+
+    pub fn tick(&mut self)
+    {
+        let time_now = self.time_start.elapsed().as_millis();
+        let time_delta = time_now - self.time_tick_previous;
+
+        self.count_total = self.count_total + 1;
+
+        self.count_per_second = 1_000_f64 / time_delta as f64;
+        self.count_per_minute = 60_000_f64 / time_delta as f64;
+
+        self.count_per_second_average = (self.count_per_second_average * (1.0_f64 - self.alpha)) + (self.count_per_second * (self.alpha));
+        self.count_per_minute_average = (self.count_per_minute_average * (1.0_f64 - self.alpha)) + (self.count_per_minute * (self.alpha));
+
+        self.time_tick_previous = time_now;
+    }
+
+    pub fn set_alpha(&mut self, alpha: f64)
+    {
+        self.alpha = alpha;
+    }
+
+    
+    pub fn get_count_per_second(&self) -> f64
+    {
+        self.count_per_second
+    }
+
+    
+    pub fn get_count_per_minute(&self) -> f64
+    {
+        self.count_per_minute
+    }
+
+    
+    pub fn get_count_per_second_average(&self) -> f64
+    {
+        self.count_per_second_average
+    }
+
+    
+    pub fn get_count_per_minute_average(&self) -> f64
+    {
+        self.count_per_minute_average
     }
 }
 
